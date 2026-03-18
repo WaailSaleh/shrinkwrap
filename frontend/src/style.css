@@ -4,10 +4,10 @@
   --bg:           transparent;
 
   /* Glass surfaces */
-  --glass:        rgba(255,255,255,0.055);
-  --glass-h:      rgba(255,255,255,0.095);
-  --glass-strong: rgba(255,255,255,0.08);
-  --glass-dialog: rgba(10,15,28,0.82);
+  --glass:        rgba(255,255,255,0.09);
+  --glass-h:      rgba(255,255,255,0.14);
+  --glass-strong: rgba(255,255,255,0.12);
+  --glass-dialog: rgba(10,15,28,0.92);
 
   /* Borders */
   --border:       rgba(255,255,255,0.10);
@@ -57,7 +57,7 @@ body::before {
     radial-gradient(ellipse 60% 50% at 15% 20%, rgba(126,184,247,0.10) 0%, transparent 70%),
     radial-gradient(ellipse 50% 60% at 85% 80%, rgba(167,139,250,0.09) 0%, transparent 70%),
     radial-gradient(ellipse 40% 40% at 50% 50%, rgba(244,114,182,0.05) 0%, transparent 70%),
-    rgba(6,9,18,0.55);
+    rgba(6,9,18,0.78);
   pointer-events: none;
   z-index: 0;
 }

@@ -1,4 +1,4 @@
-name: Build ZenithVault
+name: Build Shrinkwrap
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21'
+          go-version: '1.22'
 
       - name: Install system dependencies
         run: |
@@ -36,13 +36,13 @@ jobs:
         run: go mod download
 
       - name: Build
-        run: wails build -platform linux/amd64 -tags webkit2_41 -o zenithvault-linux-amd64
+        run: wails build -platform linux/amd64 -tags webkit2_41 -o shrinkwrap-linux-amd64
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: zenithvault-linux-amd64
-          path: build/bin/zenithvault-linux-amd64
+          name: shrinkwrap-linux-amd64
+          path: build/bin/shrinkwrap-linux-amd64
 
   # ── Windows ────────────────────────────────────────────────────────────────
   build-windows:
@@ -54,7 +54,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21'
+          go-version: '1.22'
 
       - name: Install Wails
         run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
@@ -63,14 +63,14 @@ jobs:
         run: go mod download
 
       - name: Build
-        run: wails build -platform windows/amd64 -nsis -o zenithvault-windows-amd64.exe
+        run: wails build -platform windows/amd64 -nsis -o shrinkwrap-windows-amd64.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: zenithvault-windows-amd64
+          name: shrinkwrap-windows-amd64
           path: |
-            build/bin/zenithvault-windows-amd64.exe
+            build/bin/shrinkwrap-windows-amd64.exe
             build/bin/*.nsis.exe
 
   # ── macOS (Intel + Apple Silicon universal) ────────────────────────────────
@@ -83,7 +83,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21'
+          go-version: '1.22'
 
       - name: Install Wails
         run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
@@ -92,18 +92,18 @@ jobs:
         run: go mod download
 
       - name: Build (universal binary)
-        run: wails build -platform darwin/universal -o ZenithVault.app
+        run: wails build -platform darwin/universal -o Shrinkwrap.app
 
       - name: Zip .app bundle
         run: |
           cd build/bin
-          zip -r ZenithVault-macos-universal.zip ZenithVault.app
+          zip -r Shrinkwrap-macos-universal.zip Shrinkwrap.app
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: zenithvault-macos-universal
-          path: build/bin/ZenithVault-macos-universal.zip
+          name: shrinkwrap-macos-universal
+          path: build/bin/Shrinkwrap-macos-universal.zip
 
   # ── Release (on tag push) ──────────────────────────────────────────────────
   release:
@@ -121,9 +121,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/zenithvault-linux-amd64/zenithvault-linux-amd64
-            artifacts/zenithvault-windows-amd64/zenithvault-windows-amd64.exe
-            artifacts/zenithvault-macos-universal/ZenithVault-macos-universal.zip
+            artifacts/shrinkwrap-linux-amd64/shrinkwrap-linux-amd64
+            artifacts/shrinkwrap-windows-amd64/shrinkwrap-windows-amd64.exe
+            artifacts/shrinkwrap-macos-universal/Shrinkwrap-macos-universal.zip
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
