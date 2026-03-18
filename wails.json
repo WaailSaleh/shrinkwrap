@@ -1,0 +1,21 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "Shrinkwrap",
+  "outputfilename": "shrinkwrap",
+  "frontend:dir": "frontend",
+  "frontend:install": "",
+  "frontend:build": "",
+  "frontend:builddir": "frontend",
+  "frontend:devserverurl": "",
+  "author": {
+    "name": "Shrinkwrap",
+    "email": ""
+  },
+  "info": {
+    "companyName": "Shrinkwrap",
+    "productName": "Shrinkwrap",
+    "productVersion": "1.0.0",
+    "copyright": "Copyright © 2024 Shrinkwrap",
+    "comments": "Zero-Trust Encrypted Storage"
+  }
+}

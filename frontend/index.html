@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shrinkwrap</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+<!-- ── Master Password Overlay ─────────────────────────────────────────── -->
+<div id="auth-overlay" class="overlay hidden">
+  <div class="dialog dialog--auth">
+    <div class="dialog__logo">
+      <span class="logo-badge">S</span>
+    </div>
+    <h2 class="dialog__title" id="auth-title">Shrinkwrap</h2>
+    <p class="dialog__subtitle" id="auth-subtitle">Enter your master password to unlock.</p>
+
+    <div class="field">
+      <label class="field__label" for="auth-password">Master Password</label>
+      <input id="auth-password" type="password" class="field__input" placeholder="••••••••" autocomplete="current-password" />
+    </div>
+    <div class="field hidden" id="auth-confirm-field">
+      <label class="field__label" for="auth-confirm">Confirm Password</label>
+      <input id="auth-confirm" type="password" class="field__input" placeholder="••••••••" autocomplete="new-password" />
+    </div>
+
+    <p id="auth-error" class="dialog__error hidden"></p>
+    <button id="auth-submit" class="btn btn--primary btn--full">Unlock</button>
+  </div>
+</div>
+
+<!-- ── Settings Dialog ──────────────────────────────────────────────────── -->
+<div id="settings-overlay" class="overlay hidden">
+  <div class="dialog">
+    <div class="dialog__header">
+      <h3 class="dialog__title">Settings</h3>
+      <button class="btn btn--icon" id="settings-close" aria-label="Close">✕</button>
+    </div>
+    <p class="dialog__subtitle">Configure your Telegram bot credentials.</p>
+
+    <div class="field">
+      <label class="field__label" for="settings-token">Bot Token</label>
+      <input id="settings-token" type="password" class="field__input" placeholder="123456:ABCdef…" />
+    </div>
+    <div class="field">
+      <label class="field__label" for="settings-chat">Chat ID</label>
+      <input id="settings-chat" type="text" class="field__input" placeholder="-100…" />
+    </div>
+    <div class="field">
+      <label class="field__label" for="settings-scale">UI Scale</label>
+      <select id="settings-scale" class="field__select">
+        <option value="Auto">Auto</option>
+        <option value="100%">100%</option>
+        <option value="125%">125%</option>
+        <option value="150%">150%</option>
+        <option value="175%">175%</option>
+        <option value="200%">200%</option>
+      </select>
+    </div>
+
+    <p id="settings-error" class="dialog__error hidden"></p>
+    <div class="dialog__actions">
+      <button id="settings-test" class="btn btn--secondary">Test Connection</button>
+      <button id="settings-save" class="btn btn--primary">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Upload Dialog ────────────────────────────────────────────────────── -->
+<div id="upload-overlay" class="overlay hidden">
+  <div class="dialog dialog--upload">
+    <div class="dialog__header">
+      <h3 class="dialog__title">Add to Vault</h3>
+      <button class="btn btn--icon" id="upload-close" aria-label="Close">✕</button>
+    </div>
+
+    <div class="upload-drop-zone" id="upload-drop-zone">
+      <div class="upload-drop-zone__icon">📁</div>
+      <p class="upload-drop-zone__text">Drop files here or use the buttons below</p>
+    </div>
+
+    <div class="upload-actions-row">
+      <button id="upload-add-files" class="btn btn--secondary btn--sm">Select Files</button>
+      <button id="upload-add-folder" class="btn btn--secondary btn--sm">Select Folder</button>
+    </div>
+
+    <ul id="upload-file-list" class="upload-file-list"></ul>
+
+    <div class="upload-options">
+      <label class="checkbox-label">
+        <input type="checkbox" id="upload-as-zip" />
+        <span>Bundle as ZIP</span>
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="upload-delete-originals" />
+        <span>Delete originals after upload</span>
+      </label>
+    </div>
+
+    <div class="dialog__actions">
+      <button id="upload-clear" class="btn btn--secondary">Clear</button>
+      <button id="upload-start" class="btn btn--primary" disabled>Upload</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Gift Token Dialog ─────────────────────────────────────────────────── -->
+<div id="gift-overlay" class="overlay hidden">
+  <div class="dialog">
+    <div class="dialog__header">
+      <h3 class="dialog__title" id="gift-title">Gift Token</h3>
+      <button class="btn btn--icon" id="gift-close" aria-label="Close">✕</button>
+    </div>
+    <p class="dialog__subtitle" id="gift-subtitle"></p>
+    <textarea id="gift-token-area" class="field__textarea" rows="5" readonly></textarea>
+    <div class="field hidden" id="gift-import-fields">
+      <label class="field__label" for="gift-import-filename">Filename</label>
+      <input id="gift-import-filename" type="text" class="field__input" placeholder="myfile.pdf" />
+      <label class="field__label" style="margin-top:12px" for="gift-import-token">Token</label>
+      <textarea id="gift-import-token" class="field__textarea" rows="4" placeholder="Paste gift token here…"></textarea>
+    </div>
+    <p id="gift-error" class="dialog__error hidden"></p>
+    <div class="dialog__actions">
+      <button id="gift-copy" class="btn btn--secondary hidden">Copy Token</button>
+      <button id="gift-import-btn" class="btn btn--primary hidden">Import</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Confirm Dialog ───────────────────────────────────────────────────── -->
+<div id="confirm-overlay" class="overlay hidden">
+  <div class="dialog dialog--sm">
+    <h3 class="dialog__title" id="confirm-title">Confirm</h3>
+    <p class="dialog__subtitle" id="confirm-message"></p>
+    <div class="dialog__actions">
+      <button id="confirm-cancel" class="btn btn--secondary">Cancel</button>
+      <button id="confirm-ok" class="btn btn--danger">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Main App Shell ────────────────────────────────────────────────────── -->
+<div id="app" class="app hidden">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Brand -->
+    <div class="brand">
+      <div class="logo-badge">S</div>
+      <div class="brand__text">
+        <div class="brand__name">Shrinkwrap</div>
+        <div class="brand__tagline">Zero-Trust Storage</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label">VAULT</div>
+
+    <button class="btn btn--primary btn--full btn--add" id="btn-add-vault">+ Add to Vault</button>
+
+    <div class="divider"></div>
+    <div class="section-label">STATS</div>
+
+    <div class="stats-card">
+      <div class="stats-card__count" id="stat-count">0 Files</div>
+      <div class="stats-card__label">stored in vault</div>
+      <div class="stats-card__divider"></div>
+      <div class="stats-card__row">
+        <div class="stats-card__col">
+          <div class="stats-card__col-label">☁  Cloud</div>
+          <div class="stats-card__col-value" id="stat-cloud">—</div>
+        </div>
+        <div class="stats-card__col stats-card__col--right">
+          <div class="stats-card__col-label">💾  Local DB</div>
+          <div class="stats-card__col-value" id="stat-local">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-card stats-card--speeds">
+      <div class="stats-card__row">
+        <div class="stats-card__col">
+          <div class="stats-card__col-label">⬆  Upload</div>
+          <div class="stats-card__col-value" id="stat-up-speed">—</div>
+        </div>
+        <div class="stats-card__col stats-card__col--right">
+          <div class="stats-card__col-label">⬇  Download</div>
+          <div class="stats-card__col-value" id="stat-dl-speed">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings button pinned to bottom -->
+    <button class="btn btn--ghost btn--full btn--settings" id="btn-settings">⚙  Settings</button>
+  </aside>
+
+  <!-- Main content -->
+  <div class="main-content">
+
+    <!-- Header bar -->
+    <header class="top-bar">
+      <button class="btn btn--icon sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">◀</button>
+      <h1 class="top-bar__title">Your Vault</h1>
+      <span class="top-bar__badge" id="count-badge">0 items</span>
+      <div class="top-bar__actions">
+        <button class="btn btn--secondary btn--sm" id="btn-import-gift" title="Import Gift Token">Import Gift</button>
+      </div>
+    </header>
+
+    <!-- Vault list -->
+    <div class="vault-list" id="vault-list">
+      <!-- Cards injected here by JS -->
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state hidden" id="empty-state">
+      <div class="empty-state__icon">🔒</div>
+      <div class="empty-state__title">Your vault is empty</div>
+      <div class="empty-state__subtitle">Click  <strong>+ Add to Vault</strong>  to get started</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Offline banner -->
+<div id="offline-banner" class="offline-banner hidden">
+  <span>⚠</span> No network connection — transfers will fail
+</div>
+
+<!-- Transfer panel (slides up during upload / download) -->
+<div id="transfer-panel" class="transfer-panel hidden">
+  <div class="transfer-panel__row transfer-panel__header">
+    <span class="transfer-panel__op" id="transfer-op-badge">Uploading</span>
+    <span class="transfer-panel__name" id="transfer-name">—</span>
+    <span class="transfer-panel__chunks" id="transfer-chunks"></span>
+  </div>
+  <div class="transfer-panel__bar-wrap">
+    <div class="transfer-panel__bar" id="transfer-bar" style="width:0%"></div>
+  </div>
+  <div class="transfer-panel__row transfer-panel__stats">
+    <span id="transfer-bytes">—</span>
+    <span id="transfer-speed-label">—</span>
+    <span id="transfer-eta">—</span>
+    <span id="transfer-pct">0%</span>
+  </div>
+</div>
+
+<!-- Status bar -->
+<footer class="status-bar" id="status-bar">
+  <span class="status-bar__text" id="status-text">Ready</span>
+  <span class="status-bar__progress" id="progress-text"></span>
+</footer>
+
+<!-- Busy strip (thin animated bar at top) -->
+<div class="busy-strip hidden" id="busy-strip"></div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
